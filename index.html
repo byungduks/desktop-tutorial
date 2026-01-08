@@ -1,11 +1,560 @@
 <!doctype html>
-<html>
+<html lang="ko">
 <head>
-  <meta charset="utf-8">
-  <title>My First Site</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BEESTOCK</title>
+  <style>
+    :root{
+      --bg:#0b0b0b;
+      --panel:#111;
+      --panel2:#151515;
+      --line:#2a2a2a;
+      --text:#e9e9e9;
+      --muted:#bdbdbd;
+
+      --yellow:#f3b200;
+      --yellow2:#f7c21b;
+      --green:#20d26b;
+      --red:#ff2b2b;
+
+      --sideW: 280px;
+      --topH: 64px;
+      --rowH: 36px;
+      --radius: 10px;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans KR", Arial;
+      background:var(--bg);
+      color:var(--text);
+    }
+
+    /* Layout */
+    .app{
+      display:grid;
+      grid-template-columns: var(--sideW) 1fr;
+      grid-template-rows: var(--topH) 1fr;
+      height:100vh;
+      overflow:hidden;
+    }
+
+    /* Sidebar */
+    .sidebar{
+      grid-row: 1 / span 2;
+      background:#050505;
+      border-right:1px solid var(--line);
+      display:flex;
+      flex-direction:column;
+      min-width: var(--sideW);
+    }
+
+    .brand{
+      height: var(--topH);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:900;
+      letter-spacing:1px;
+      font-size:26px;
+      color:#fff;
+      border-bottom:1px solid var(--line);
+    }
+
+    .nav{
+      padding:10px 0;
+      border-bottom:1px solid var(--line);
+    }
+    .nav a{
+      display:block;
+      text-decoration:none;
+      color:#000;
+      background: var(--yellow);
+      margin:8px 10px;
+      padding:10px 12px;
+      font-weight:800;
+      text-align:center;
+      border:1px solid #000;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.12);
+      user-select:none;
+    }
+    .nav a:hover{ filter:brightness(1.05); }
+    .nav a.active{
+      outline:3px solid rgba(255,255,255,.25);
+    }
+
+    .ad{
+      margin:14px 10px;
+      border:1px solid var(--line);
+      background:#fff;
+      color:#111;
+      border-radius:8px;
+      overflow:hidden;
+    }
+    .ad .ad-top{
+      padding:14px 16px 10px;
+      font-weight:800;
+      font-size:20px;
+      text-align:center;
+      line-height:1.25;
+    }
+    .ad .ad-bottom{
+      padding:6px 16px 18px;
+      text-align:center;
+      font-weight:900;
+      font-size:44px;
+      color:#e10000;
+      letter-spacing:-1px;
+    }
+    .ad .ad-bottom span{
+      display:block;
+      font-size:42px;
+      color:#000;
+      margin-top:2px;
+    }
+
+    .side-foot{
+      margin-top:auto;
+      padding:10px;
+      color:#777;
+      font-size:12px;
+      border-top:1px solid var(--line);
+      text-align:center;
+    }
+
+    /* Top bar */
+    .topbar{
+      grid-column: 2;
+      height: var(--topH);
+      background: var(--yellow);
+      border-bottom:1px solid #000;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      position:relative;
+      padding:0 12px;
+    }
+    .topbar .title{
+      font-weight:900;
+      font-size:26px;
+      letter-spacing:10px;
+      color:#000;
+    }
+    .topbar .title span{
+      display:inline-block;
+      background: rgba(0,0,0,.06);
+      border:2px solid rgba(0,0,0,.6);
+      padding:4px 16px;
+    }
+    .topbar .controls{
+      position:absolute;
+      right:10px;
+      display:flex;
+      gap:8px;
+    }
+    .topbar .btn{
+      width:28px; height:28px;
+      background:#000;
+      border:1px solid rgba(255,255,255,.35);
+      border-radius:6px;
+    }
+
+    /* Main */
+    .main{
+      grid-column:2;
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+      background: #0c0c0c;
+      padding:10px;
+      gap:10px;
+    }
+
+    .card{
+      background: linear-gradient(180deg, #0f0f0f, #0a0a0a);
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      overflow:hidden;
+      height:100%;
+      display:flex;
+      flex-direction:column;
+    }
+
+    /* Table */
+    .table-wrap{
+      overflow:auto;
+      height:100%;
+      /* scroll bar */
+      scrollbar-color: #444 #111;
+    }
+    .table{
+      width:100%;
+      border-collapse:separate;
+      border-spacing:0;
+      min-width: 980px;
+    }
+
+    thead th{
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      background: #1a1a1a;
+      color:#fff;
+      font-weight:900;
+      font-size:14px;
+      text-align:left;
+      border-bottom:1px solid var(--line);
+      padding:10px 10px;
+      white-space:nowrap;
+    }
+
+    thead th.sortable{
+      cursor:pointer;
+      user-select:none;
+    }
+    thead th.sortable:hover{
+      background:#202020;
+    }
+
+    .th-flex{
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    .sort-icon{
+      display:inline-block;
+      width:0; height:0;
+      border-left:5px solid transparent;
+      border-right:5px solid transparent;
+      border-top:8px solid #dcdcdc; /* ▼ */
+      opacity:.85;
+      transform: translateY(1px);
+    }
+    .sort-state{
+      font-size:12px;
+      opacity:.85;
+      margin-left:auto;
+      color:#cfcfcf;
+    }
+
+    tbody tr{
+      height: var(--rowH);
+    }
+
+    tbody td{
+      border-bottom:1px solid #151515;
+      padding:8px 10px;
+      font-size:14px;
+      white-space:nowrap;
+      background:#0b0b0b;
+    }
+
+    tbody tr:nth-child(even) td{
+      background:#101010;
+    }
+
+    tbody td.name{
+      font-weight:800;
+      max-width: 260px;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    tbody td.price{
+      font-weight:900;
+      text-align:right;
+      width:110px;
+    }
+
+    tbody td.pct{
+      text-align:right;
+      width:90px;
+      font-variant-numeric: tabular-nums;
+      font-weight:900;
+    }
+
+    .pos{ color: var(--green); }
+    .neg{ color: var(--red); }
+    .zero{ color: #d7d7d7; }
+
+    /* Price “highlight blocks” 느낌 */
+    td.price.highlight-green{
+      background: rgba(32,210,107,.25) !important;
+      border-left:3px solid var(--green);
+      border-right:1px solid #0f2a1b;
+    }
+    td.price.highlight-red{
+      background: rgba(255,43,43,.22) !important;
+      border-left:3px solid var(--red);
+      border-right:1px solid #2a0f0f;
+    }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      :root{ --sideW: 220px; }
+      .topbar .title{ letter-spacing:6px; font-size:22px; }
+      .nav a{ font-size:14px; padding:9px 10px; }
+      .ad .ad-bottom{ font-size:38px; }
+    }
+
+    @media (max-width: 720px){
+      .app{
+        grid-template-columns: 1fr;
+        grid-template-rows: var(--topH) auto 1fr;
+      }
+      .sidebar{
+        grid-row:auto;
+        grid-column:1;
+        flex-direction:column;
+        min-width:auto;
+      }
+      .topbar{ grid-column:1; }
+      .main{ grid-column:1; }
+      .brand{ justify-content:flex-start; padding-left:14px; }
+      .ad{ display:none; }
+    }
+  </style>
 </head>
+
 <body>
-  <h1>Hello World</h1>
-  <p>GitHub Desktop 정상 작동 중</p>
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="brand">BEESTOCK</div>
+
+      <nav class="nav">
+        <a class="active" href="#">Home</a>
+        <a href="#">Guru Portfolio</a>
+        <a href="#">News</a>
+        <a href="#">REITS</a>
+        <a href="#">Peer Group Analysis</a>
+        <a href="#">ETF Finder</a>
+        <a href="#">Today Stock</a>
+        <a href="#">Calendar</a>
+        <a href="#">World Stock Market ETF</a>
+        <a href="#">Volume Analysis</a>
+        <a href="#">Promising Stock Ranking</a>
+      </nav>
+
+      <div class="ad">
+        <div class="ad-top">직원 휴게실이 좁아<br/>고민이신</div>
+        <div class="ad-bottom">사장님만<span>보세요!</span></div>
+      </div>
+
+      <div class="side-foot">© BEESTOCK</div>
+    </aside>
+
+    <!-- Top bar -->
+    <header class="topbar">
+      <div class="title"><span>[&nbsp;&nbsp;검&nbsp;&nbsp;색&nbsp;&nbsp;창&nbsp;&nbsp;]</span></div>
+      <div class="controls" aria-hidden="true">
+        <div class="btn"></div>
+        <div class="btn"></div>
+      </div>
+    </header>
+
+    <!-- Main -->
+    <main class="main">
+      <section class="card">
+        <div class="table-wrap" id="wrap">
+          <table class="table" id="stockTable">
+            <thead>
+              <tr>
+                <th class="sortable" data-key="name">
+                  <div class="th-flex">
+                    <span>Name</span>
+                    <span class="sort-icon"></span>
+                    <span class="sort-state" id="state-name"></span>
+                  </div>
+                </th>
+                <th class="sortable" data-key="price" style="text-align:right;">
+                  <div class="th-flex">
+                    <span>Price</span>
+                    <span class="sort-icon"></span>
+                    <span class="sort-state" id="state-price"></span>
+                  </div>
+                </th>
+
+                <th class="sortable" data-key="d1" style="text-align:right;">
+                  <div class="th-flex"><span>1D %Chg</span><span class="sort-icon"></span><span class="sort-state" id="state-d1"></span></div>
+                </th>
+                <th class="sortable" data-key="d5" style="text-align:right;">
+                  <div class="th-flex"><span>5D</span><span class="sort-icon"></span><span class="sort-state" id="state-d5"></span></div>
+                </th>
+                <th class="sortable" data-key="m1" style="text-align:right;">
+                  <div class="th-flex"><span>1M</span><span class="sort-icon"></span><span class="sort-state" id="state-m1"></span></div>
+                </th>
+                <th class="sortable" data-key="m3" style="text-align:right;">
+                  <div class="th-flex"><span>3M</span><span class="sort-icon"></span><span class="sort-state" id="state-m3"></span></div>
+                </th>
+                <th class="sortable" data-key="m6" style="text-align:right;">
+                  <div class="th-flex"><span>6M</span><span class="sort-icon"></span><span class="sort-state" id="state-m6"></span></div>
+                </th>
+                <th class="sortable" data-key="ytd" style="text-align:right;">
+                  <div class="th-flex"><span>YTD</span><span class="sort-icon"></span><span class="sort-state" id="state-ytd"></span></div>
+                </th>
+                <th class="sortable" data-key="y1" style="text-align:right;">
+                  <div class="th-flex"><span>1Y</span><span class="sort-icon"></span><span class="sort-state" id="state-y1"></span></div>
+                </th>
+                <th class="sortable" data-key="y3" style="text-align:right;">
+                  <div class="th-flex"><span>3Y</span><span class="sort-icon"></span><span class="sort-state" id="state-y3"></span></div>
+                </th>
+                <th class="sortable" data-key="y5" style="text-align:right;">
+                  <div class="th-flex"><span>5Y</span><span class="sort-icon"></span><span class="sort-state" id="state-y5"></span></div>
+                </th>
+                <th class="sortable" data-key="y10" style="text-align:right;">
+                  <div class="th-flex"><span>10Y</span><span class="sort-icon"></span><span class="sort-state" id="state-y10"></span></div>
+                </th>
+              </tr>
+            </thead>
+
+            <tbody id="tbody"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // ====== 데이터(샘플) ======
+    // 여기에 종목/수익률 데이터를 넣으면 자동 렌더링됩니다.
+    const rows = [
+      { name:"Visa Inc", price:1245.46, d1: 0.62, d5: 0.62, m1: 0.62, m3:-6.54, m6: 0.62, ytd: 0.62, y1: 0.62, y3:-6.54, y5: 0.62, y10:0.62 },
+      { name:"Apple Inc", price: 453.23, d1:-13.21, d5:-13.21, m1: 2.22, m3:-13.21, m6:-13.21, ytd:20.22, y1: 2.22, y3:-13.21, y5:-13.21, y10:-13.21 },
+      { name:"Microsoft Corporation", price: 12.16, d1: 1.50, d5: 1.50, m1:-6.54, m3: 1.50, m6: 1.50, ytd: 1.50, y1:-6.54, y3:0.62, y5:1.50, y10:1.50 },
+      { name:"Alphabet Inc", price:879.56, d1: 2.22, d5:20.22, m1:-13.21, m3:20.22, m6:-13.21, ytd:-13.21, y1:-13.21, y3:20.22, y5:2.22, y10:2.22 },
+      { name:"Amazoncom Inc", price:663.23, d1:-6.54, d5:-6.54, m1: 1.50, m3: 0.62, m6:-6.54, ytd: 1.50, y1: 0.62, y3:-6.54, y5:-6.54, y10:-6.54 },
+      { name:"Berkshire Hathaway Inc", price:21.12, d1:20.22, d5:-13.21, m1: 2.22, m3:20.22, m6:20.22, ytd: 2.22, y1:20.22, y3:-13.21, y5:20.22, y10:20.22 },
+      { name:"Visa Inc", price:83.36, d1: 0.62, d5:0.62, m1:0.62, m3:-6.55, m6:0.62, ytd:0.62, y1:0.62, y3:-6.55, y5:0.63, y10:0.63 },
+      { name:"Apple Inc", price:453.23, d1:-13.21, d5:-13.21, m1:2.23, m3:-13.21, m6:-13.21, ytd:20.23, y1:2.23, y3:-13.21, y5:-13.21, y10:-13.21 },
+      { name:"Microsoft Corporation", price:12.16, d1:1.50, d5:1.50, m1:-6.55, m3:1.50, m6:1.50, ytd:1.50, y1:-6.55, y3:0.63, y5:1.51, y10:1.51 },
+      { name:"Alphabet Inc", price:879.56, d1:2.23, d5:20.23, m1:-13.22, m3:20.23, m6:-13.21, ytd:-13.21, y1:-13.21, y3:20.23, y5:2.23, y10:2.23 },
+      { name:"Amazoncom Inc", price:663.23, d1:-6.54, d5:-6.54, m1:1.51, m3:0.63, m6:-6.55, ytd:1.51, y1:0.63, y3:-6.54, y5:-6.54, y10:-6.54 },
+      { name:"Berkshire Hathaway Inc", price:21.12, d1:20.23, d5:-13.22, m1:2.23, m3:20.22, m6:20.22, ytd:2.23, y1:20.23, y3:-13.22, y5:20.23, y10:20.23 },
+    ];
+
+    const columns = [
+      { key:"name", label:"Name", type:"text" },
+      { key:"price", label:"Price", type:"number" },
+      { key:"d1", label:"1D", type:"pct" },
+      { key:"d5", label:"5D", type:"pct" },
+      { key:"m1", label:"1M", type:"pct" },
+      { key:"m3", label:"3M", type:"pct" },
+      { key:"m6", label:"6M", type:"pct" },
+      { key:"ytd", label:"YTD", type:"pct" },
+      { key:"y1", label:"1Y", type:"pct" },
+      { key:"y3", label:"3Y", type:"pct" },
+      { key:"y5", label:"5Y", type:"pct" },
+      { key:"y10", label:"10Y", type:"pct" },
+    ];
+
+    // ====== 렌더링 ======
+    const tbody = document.getElementById("tbody");
+
+    function pctClass(v){
+      if (v > 0) return "pos";
+      if (v < 0) return "neg";
+      return "zero";
+    }
+
+    function fmtPrice(v){
+      // 천단위 콤마
+      return v.toLocaleString(undefined, { minimumFractionDigits:2, maximumFractionDigits:2 });
+    }
+
+    function fmtPct(v){
+      const sign = v > 0 ? "+" : "";
+      return `${sign}${v.toFixed(2)}%`;
+    }
+
+    function render(data){
+      tbody.innerHTML = "";
+      data.forEach((r, idx) => {
+        const tr = document.createElement("tr");
+
+        // name
+        const tdName = document.createElement("td");
+        tdName.className = "name";
+        tdName.textContent = r.name;
+        tr.appendChild(tdName);
+
+        // price with occasional highlight like screenshot
+        const tdPrice = document.createElement("td");
+        tdPrice.className = "price";
+        tdPrice.textContent = fmtPrice(r.price);
+
+        // 데모: 가격이 특정 조건일 때 강조(스크린샷 느낌)
+        if (idx % 6 === 1) tdPrice.classList.add("highlight-red");
+        if (idx % 6 === 5) tdPrice.classList.add("highlight-green");
+
+        tr.appendChild(tdPrice);
+
+        // pct columns
+        ["d1","d5","m1","m3","m6","ytd","y1","y3","y5","y10"].forEach(k => {
+          const td = document.createElement("td");
+          td.className = `pct ${pctClass(r[k])}`;
+          td.textContent = fmtPct(r[k]);
+          tr.appendChild(td);
+        });
+
+        tbody.appendChild(tr);
+      });
+    }
+
+    // ====== 정렬 ======
+    let sortKey = "name";
+    let sortDir = "asc"; // asc | desc
+
+    const stateEls = {};
+    columns.forEach(c => {
+      const el = document.getElementById("state-" + c.key);
+      if (el) stateEls[c.key] = el;
+    });
+
+    function setSortState(){
+      Object.values(stateEls).forEach(el => el.textContent = "");
+      if (stateEls[sortKey]) {
+        stateEls[sortKey].textContent = sortDir === "asc" ? "▲" : "▼";
+      }
+    }
+
+    function sortData(key){
+      if (sortKey === key){
+        sortDir = (sortDir === "asc") ? "desc" : "asc";
+      } else {
+        sortKey = key;
+        sortDir = "asc";
+      }
+
+      const sorted = [...rows].sort((a,b) => {
+        const av = a[key];
+        const bv = b[key];
+
+        // text vs number
+        if (typeof av === "string"){
+          const cmp = av.localeCompare(bv);
+          return sortDir === "asc" ? cmp : -cmp;
+        } else {
+          const cmp = (av ?? 0) - (bv ?? 0);
+          return sortDir === "asc" ? cmp : -cmp;
+        }
+      });
+
+      setSortState();
+      render(sorted);
+    }
+
+    // header click
+    document.querySelectorAll("th.sortable").forEach(th => {
+      th.addEventListener("click", () => sortData(th.dataset.key));
+    });
+
+    // 초기 렌더
+    setSortState();
+    render(rows);
+  </script>
 </body>
 </html>
