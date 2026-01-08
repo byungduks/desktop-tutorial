@@ -49,10 +49,12 @@ body{
   color:#000;
   font-weight:900;
   text-align:center;
-  padding:14px 0;
+  padding:12px 0;
   margin:6px;
   text-decoration:none;
   font-size:18px;
+  letter-spacing:0.2px;
+  border:1px solid rgba(0,0,0,0.35);
 }
 
 .menu a:hover{filter:brightness(1.05);}
@@ -102,48 +104,64 @@ body{
   overflow:auto;
 }
 
-/* ===== TABLE ===== */
+/* ===== TABLE (원본 느낌 재조정) ===== */
 table{
   width:100%;
-  border-collapse:collapse;
+  border-collapse:separate;
+  border-spacing:0;
   min-width:1200px;
 }
 
-thead{
-  background:#1b1b1b;
+/* 헤더: 더 또렷 + 살짝 밝은 그레이 */
+thead th{
+  background: linear-gradient(#3a3a3a, #2b2b2b);
+  color:#f1f1f1;
+  font-size:15px;         /* 헤더는 15 */
+  font-weight:800;
+  padding:10px 12px;
+  border-bottom:1px solid #1a1a1a;
 }
 
-th,td{
-  padding:7px 10px;
-  font-size:13px;
-  white-space:nowrap;
+/* 본문: 헤더보다 살짝 작고 단정 */
+tbody td{
+  font-size:14px;         /* 본문은 14 */
+  font-weight:700;
+  padding:8px 12px;       /* 밀도(행 높이) 맞춤 */
+  border-bottom:1px solid #101010; /* 구분선 강화 */
+  background: linear-gradient(#0e0e0e, #0a0a0a);
+  color:#e9e9e9;
 }
 
-th{
-  text-align:left;
-  font-weight:900;
-  border-bottom:1px solid #333;
+/* 지그재그 줄 */
+tbody tr:nth-child(even) td{
+  background: linear-gradient(#111, #0b0b0b);
 }
 
-td{
-  border-bottom:1px solid #111;
-}
+/* 이름/가격 정렬 */
+.name{font-weight:800;color:#f2f2f2;}
+.price{text-align:right;font-weight:800;color:#f2f2f2;}
 
-tr:nth-child(even) td{
-  background:#0f0f0f;
-}
+/* 상승/하락: 네온 줄이고 원본처럼 차분하게 */
+.pos{color:#24d66a;font-weight:800;}  /* 기존보다 덜 쨍한 그린 */
+.neg{color:#ff3b3b;font-weight:800;}  /* 기존보다 덜 쨍한 레드 */
 
-.name{font-weight:900;}
-.price{text-align:right;font-weight:900;}
-
-.pos{color:#22dd77;font-weight:900;}
-.neg{color:#ff2b2b;font-weight:900;}
-
-/* 가격 강조 */
+/* 가격 강조(원본처럼 "좌측 색띠 + 어두운 바탕") */
 .price.red{
-  background:#b00000;
+  background: linear-gradient(90deg, #ff0000 0 6px, #2a0000 6px 100%);
 }
 .price.green{
+  background: linear-gradient(90deg, #18c05a 0 6px, #062417 6px 100%);
+}
+
+/* 컬럼 구분선(원본처럼 아주 은은하게) */
+thead th + th,
+tbody td + td{
+  border-left:1px solid #0b0b0b;
+}
+
+/* 위쪽 라운드 느낌(원본처럼 약간) */
+thead th:first-child{border-top-left-radius:8px;}
+thead th:last-child{border-top-right-radius:8px;}
   background:#145c32;
 }
 </style>
