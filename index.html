@@ -3,233 +3,224 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>BEESTOCK</title>
+<title>BEESTOCK Professional</title>
 
 <style>
-/* ===== RESET ===== */
+/* ===== 폰트 및 기본 설정 ===== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+
 *{margin:0;padding:0;box-sizing:border-box;}
 html,body{width:100%;height:100%;overflow:hidden;}
-body{
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans KR", Arial;
-  background:#000;
-  color:#fff;
+
+body {
+  /* 현대적인 산세리프 폰트 스택 */
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Pretendard", sans-serif;
+  background: #0b0e11; /* 깊이감 있는 다크 배경 */
+  color: #eaecef;
+  -webkit-font-smoothing: antialiased;
 }
 
 /* ===== LAYOUT ===== */
-.app{
-  display:grid;
-  grid-template-columns:260px 1fr;
-  grid-template-rows:60px 1fr;
-  width:100vw;
-  height:100vh;
+.app {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  grid-template-rows: 50px 1fr;
+  width: 100vw;
+  height: 100vh;
 }
 
-/* ===== SIDEBAR ===== */
-.sidebar{
-  grid-row:1 / span 2;
-  background:#000;
-  border-right:1px solid #222;
-  display:flex;
-  flex-direction:column;
+/* ===== SIDEBAR (고급스러운 골드 & 다크) ===== */
+.sidebar {
+  grid-row: 1 / span 2;
+  background: #15191c;
+  border-right: 1px solid #2b3139;
+  display: flex;
+  flex-direction: column;
 }
 
-.logo{
-  height:60px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:26px;
-  font-weight:900;
-  border-bottom:1px solid #222;
+.logo {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+  font-size: 22px;
+  font-weight: 800;
+  color: #f0b90b; /* 바이낸스 스타일 골드 */
+  letter-spacing: -0.5px;
 }
 
-.menu a{
-  display:block;
-  background:#f2b200;
-  color:#000;
-  font-weight:900;
-  text-align:center;
-  padding:12px 0;
-  margin:6px;
-  text-decoration:none;
-  font-size:18px;
-  letter-spacing:0.2px;
-  border:1px solid rgba(0,0,0,0.35);
+.menu { padding: 10px 0; }
+.menu a {
+  display: block;
+  background: #f0b90b;
+  color: #000;
+  font-weight: 700;
+  text-align: center;
+  padding: 10px 0;
+  margin: 4px 12px;
+  text-decoration: none;
+  font-size: 14px;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+.menu a:hover {
+  background: #f8d33a;
+  transform: translateY(-1px);
 }
 
-.menu a:hover{filter:brightness(1.05);}
-
-.ad{
-  margin:10px;
-  background:#fff;
-  color:#000;
-  text-align:center;
-  padding:20px 10px;
-  font-weight:900;
+.ad {
+  margin-top: auto;
+  margin: 15px;
+  background: #f8f9fa;
+  color: #1e2329;
+  border-radius: 8px;
+  text-align: center;
+  padding: 20px 10px;
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 1.5;
 }
-.ad .red{color:#e60000;font-size:38px;}
+.ad .red { color: #d93025; font-size: 28px; font-weight: 800; display: block; margin-top: 5px; }
 
 /* ===== TOP BAR ===== */
-.topbar{
-  grid-column:2;
-  background:#f2b200;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  position:relative;
+.topbar {
+  grid-column: 2;
+  background: #f0b90b;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  justify-content: space-between;
 }
 
-.search{
-  border:2px solid #000;
-  padding:6px 40px;
-  font-size:22px;
-  font-weight:900;
+.search {
+  background: rgba(0,0,0,0.05);
+  border: 1px solid rgba(0,0,0,0.1);
+  padding: 6px 20px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #000;
+  width: 300px;
 }
 
-.window-btns{
-  position:absolute;
-  right:10px;
-  display:flex;
-  gap:8px;
-}
-.window-btns div{
-  width:24px;height:24px;
-  background:#000;
+.window-btns { display: flex; gap: 6px; }
+.window-btns div { width: 12px; height: 12px; border-radius: 50%; background: #000; opacity: 0.3; }
+
+/* ===== MAIN TABLE ===== */
+.main { grid-column: 2; background: #0b0e11; overflow: auto; padding: 10px; }
+
+table { width: 100%; border-collapse: collapse; min-width: 1000px; }
+
+/* 헤더: 폰트 크기를 살짝 줄이고 간격을 넓힘 */
+thead th {
+  position: sticky; top: 0;
+  background: #1e2329;
+  color: #848e9c; /* 보조 텍스트 색상 */
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #2b3139;
 }
 
-/* ===== MAIN ===== */
-.main{
-  grid-column:2;
-  background:#000;
-  overflow:auto;
+/* 본문: 숫자 가독성 중심 */
+tbody td {
+  font-size: 14px;
+  font-weight: 500;
+  padding: 10px 12px;
+  border-bottom: 1px solid #21262c;
+  color: #eaecef;
 }
 
-/* ===== TABLE (원본 느낌 재조정) ===== */
-table{
-  width:100%;
-  border-collapse:separate;
-  border-spacing:0;
-  min-width:1200px;
+tbody tr:hover td { background: #1e2329; } /* 마우스 오버 효과 */
+
+.name { font-weight: 600; color: #fff; }
+.price { text-align: right; font-family: 'Inter', sans-serif; font-weight: 600; }
+
+/* 상승/하락 색상 최적화 (눈의 피로 감소) */
+.pos { color: #02c076; } /* 민트 그린 */
+.neg { color: #f84960; } /* 코랄 레드 */
+
+/* 가격 강조 박스 (원본 스타일 계승 + 디자인 세련화) */
+.price.highlight {
+  position: relative;
+  padding-left: 15px !important;
 }
 
-/* 헤더: 더 또렷 + 살짝 밝은 그레이 */
-thead th{
-  background: linear-gradient(#3a3a3a, #2b2b2b);
-  color:#f1f1f1;
-  font-size:15px;         /* 헤더는 15 */
-  font-weight:800;
-  padding:10px 12px;
-  border-bottom:1px solid #1a1a1a;
+.price.neg.highlight {
+  background: linear-gradient(90deg, #f84960 0 4px, rgba(248, 73, 96, 0.1) 4px 100%);
+}
+.price.pos.highlight {
+  background: linear-gradient(90deg, #02c076 0 4px, rgba(2, 192, 118, 0.1) 4px 100%);
 }
 
-/* 본문: 헤더보다 살짝 작고 단정 */
-tbody td{
-  font-size:14px;         /* 본문은 14 */
-  font-weight:700;
-  padding:8px 12px;       /* 밀도(행 높이) 맞춤 */
-  border-bottom:1px solid #101010; /* 구분선 강화 */
-  background: linear-gradient(#0e0e0e, #0a0a0a);
-  color:#e9e9e9;
-}
+/* 우측 정렬이 필요한 컬럼들 */
+th:nth-child(n+2), td:nth-child(n+2) { text-align: right; }
 
-/* 지그재그 줄 */
-tbody tr:nth-child(even) td{
-  background: linear-gradient(#111, #0b0b0b);
-}
-
-/* 이름/가격 정렬 */
-.name{font-weight:800;color:#f2f2f2;}
-.price{text-align:right;font-weight:800;color:#f2f2f2;}
-
-/* 상승/하락: 네온 줄이고 원본처럼 차분하게 */
-.pos{color:#24d66a;font-weight:800;}  /* 기존보다 덜 쨍한 그린 */
-.neg{color:#ff3b3b;font-weight:800;}  /* 기존보다 덜 쨍한 레드 */
-
-/* 가격 강조(원본처럼 "좌측 색띠 + 어두운 바탕") */
-.price.red{
-  background: linear-gradient(90deg, #ff0000 0 6px, #2a0000 6px 100%);
-}
-.price.green{
-  background: linear-gradient(90deg, #18c05a 0 6px, #062417 6px 100%);
-}
-
-/* 컬럼 구분선(원본처럼 아주 은은하게) */
-thead th + th,
-tbody td + td{
-  border-left:1px solid #0b0b0b;
-}
-
-/* 위쪽 라운드 느낌(원본처럼 약간) */
-thead th:first-child{border-top-left-radius:8px;}
-thead th:last-child{border-top-right-radius:8px;}
-  background:#145c32;
-}
 </style>
 </head>
 
 <body>
 <div class="app">
 
-  <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="logo">BEESTOCK</div>
     <nav class="menu">
-      <a>Home</a><a>Guru Portfolio</a><a>News</a><a>REITS</a>
-      <a>Peer Group Analysis</a><a>ETF Finder</a><a>Today Stock</a>
-      <a>Calendar</a><a>World Stock Market ETF</a>
-      <a>Volume Analysis</a><a>Promising Stock Ranking</a>
+      <a href="#">Home</a>
+      <a href="#">Guru Portfolio</a>
+      <a href="#">News</a>
+      <a href="#">REITS</a>
+      <a href="#">ETF Finder</a>
+      <a href="#">Today Stock</a>
+      <a href="#">Promising Ranking</a>
     </nav>
     <div class="ad">
-      직원 휴게실이 좁아<br>고민이신<br>
-      <span class="red">사장님만<br>보세요!</span>
+      직원 휴게실이 좁아 고민이신<br>
+      <span class="red">사장님만 보세요!</span>
     </div>
   </aside>
 
-  <!-- TOP -->
   <header class="topbar">
-    <div class="search">[ &nbsp;검 색 창&nbsp; ]</div>
-    <div class="window-btns"><div></div><div></div></div>
+    <div class="search">Search ticker, name...</div>
+    <div class="window-btns"><div></div><div></div><div></div></div>
   </header>
 
-  <!-- MAIN -->
   <main class="main">
     <table>
       <thead>
         <tr>
-          <th>Name</th><th style="text-align:right">Price</th>
-          <th>1D %Chg</th><th>5D</th><th>1M</th><th>3M</th><th>6M</th>
-          <th>YTD</th><th>1Y</th><th>3Y</th><th>5Y</th><th>10Y</th>
+          <th>Name</th><th>Price</th><th>1D %Chg</th><th>5D</th><th>1M</th><th>3M</th><th>6M</th><th>YTD</th><th>1Y</th><th>3Y</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td class="name">Visa Inc</td>
           <td class="price">1,245.46</td>
-          <td class="pos">+0.62%</td><td class="pos">+0.62%</td>
+          <td class="pos">+0.62%</td><td class="pos">+0.62%</td><td class="pos">+0.62%</td>
+          <td class="neg">-6.54%</td><td class="pos">+0.62%</td><td class="pos">+0.62%</td>
           <td class="pos">+0.62%</td><td class="neg">-6.54%</td>
-          <td class="pos">+0.62%</td><td class="pos">+0.62%</td>
-          <td class="pos">+0.62%</td><td class="neg">-6.54%</td>
-          <td class="pos">+0.62%</td><td class="pos">+0.62%</td>
         </tr>
-
         <tr>
           <td class="name">Apple Inc</td>
-          <td class="price red">453.23</td>
-          <td class="neg">-13.21%</td><td class="neg">-13.21%</td>
+          <td class="price neg highlight">453.23</td>
+          <td class="neg">-13.21%</td><td class="neg">-13.21%</td><td class="pos">+2.22%</td>
+          <td class="neg">-13.21%</td><td class="neg">-13.21%</td><td class="pos">+20.22%</td>
           <td class="pos">+2.22%</td><td class="neg">-13.21%</td>
-          <td class="neg">-13.21%</td><td class="pos">+20.22%</td>
-          <td class="pos">+2.22%</td><td class="neg">-13.21%</td>
-          <td class="neg">-13.21%</td><td class="neg">-13.21%</td>
         </tr>
-
         <tr>
-          <td class="name">Berkshire Hathaway Inc</td>
-          <td class="price green">21.12</td>
+          <td class="name">Microsoft Corp</td>
+          <td class="price pos highlight">382.41</td>
+          <td class="pos">+1.50%</td><td class="pos">+1.50%</td><td class="neg">-6.54%</td>
+          <td class="pos">+1.50%</td><td class="pos">+1.50%</td><td class="pos">+1.50%</td>
+          <td class="neg">-6.54%</td><td class="pos">+0.62%</td>
+        </tr>
+        <tr>
+          <td class="name">Berkshire Hathaway</td>
+          <td class="price pos highlight">21.12</td>
+          <td class="pos">+20.22%</td><td class="neg">-13.21%</td><td class="pos">+2.22%</td>
+          <td class="pos">+20.22%</td><td class="pos">+20.22%</td><td class="pos">+2.22%</td>
           <td class="pos">+20.22%</td><td class="neg">-13.21%</td>
-          <td class="pos">+2.22%</td><td class="pos">+20.22%</td>
-          <td class="pos">+20.22%</td><td class="pos">+2.22%</td>
-          <td class="pos">+20.22%</td><td class="neg">-13.21%</td>
-          <td class="pos">+20.22%</td><td class="pos">+20.22%</td>
         </tr>
       </tbody>
     </table>
