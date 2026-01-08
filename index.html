@@ -4,6 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>BEESTOCK</title>
+
   <style>
     :root{
       --bg:#0b0b0b;
@@ -11,17 +12,24 @@
       --panel2:#151515;
       --line:#2a2a2a;
       --text:#e9e9e9;
-      --muted:#bdbdbd;
 
       --yellow:#f3b200;
-      --yellow2:#f7c21b;
       --green:#20d26b;
       --red:#ff2b2b;
 
       --sideW: 280px;
-      --topH: 64px;
-      --rowH: 36px;
+      --topH: 62px;
+      --rowH: 34px;
       --radius: 10px;
+
+      /* 글자 크기(원본 느낌으로 고정) */
+      --fs-brand: 26px;
+      --fs-nav: 16px;
+      --fs-top: 22px;
+      --fs-th: 13px;
+      --fs-td: 13px;
+      --fs-ad-top: 20px;
+      --fs-ad-big: 40px;
     }
 
     *{ box-sizing:border-box; }
@@ -33,7 +41,7 @@
       color:var(--text);
     }
 
-    /* Layout */
+    /* ===== Layout ===== */
     .app{
       display:grid;
       grid-template-columns: var(--sideW) 1fr;
@@ -42,7 +50,7 @@
       overflow:hidden;
     }
 
-    /* Sidebar */
+    /* ===== Sidebar ===== */
     .sidebar{
       grid-row: 1 / span 2;
       background:#050505;
@@ -59,7 +67,7 @@
       justify-content:center;
       font-weight:900;
       letter-spacing:1px;
-      font-size:26px;
+      font-size: var(--fs-brand);
       color:#fff;
       border-bottom:1px solid var(--line);
     }
@@ -75,15 +83,16 @@
       background: var(--yellow);
       margin:8px 10px;
       padding:10px 12px;
-      font-weight:800;
+      font-weight:900;
+      font-size: var(--fs-nav);
       text-align:center;
       border:1px solid #000;
       box-shadow: inset 0 0 0 1px rgba(255,255,255,.12);
       user-select:none;
     }
-    .nav a:hover{ filter:brightness(1.05); }
+    .nav a:hover{ filter:brightness(1.04); }
     .nav a.active{
-      outline:3px solid rgba(255,255,255,.25);
+      outline:3px solid rgba(255,255,255,.20);
     }
 
     .ad{
@@ -96,8 +105,8 @@
     }
     .ad .ad-top{
       padding:14px 16px 10px;
-      font-weight:800;
-      font-size:20px;
+      font-weight:900;
+      font-size: var(--fs-ad-top);
       text-align:center;
       line-height:1.25;
     }
@@ -105,13 +114,13 @@
       padding:6px 16px 18px;
       text-align:center;
       font-weight:900;
-      font-size:44px;
+      font-size: var(--fs-ad-big);
       color:#e10000;
       letter-spacing:-1px;
     }
     .ad .ad-bottom span{
       display:block;
-      font-size:42px;
+      font-size: calc(var(--fs-ad-big) + 2px);
       color:#000;
       margin-top:2px;
     }
@@ -125,7 +134,7 @@
       text-align:center;
     }
 
-    /* Top bar */
+    /* ===== Top bar ===== */
     .topbar{
       grid-column: 2;
       height: var(--topH);
@@ -139,14 +148,14 @@
     }
     .topbar .title{
       font-weight:900;
-      font-size:26px;
-      letter-spacing:10px;
+      font-size: var(--fs-top);
+      letter-spacing: 10px;
       color:#000;
     }
     .topbar .title span{
       display:inline-block;
       background: rgba(0,0,0,.06);
-      border:2px solid rgba(0,0,0,.6);
+      border:2px solid rgba(0,0,0,.65);
       padding:4px 16px;
     }
     .topbar .controls{
@@ -162,7 +171,7 @@
       border-radius:6px;
     }
 
-    /* Main */
+    /* ===== Main ===== */
     .main{
       grid-column:2;
       overflow:hidden;
@@ -183,13 +192,13 @@
       flex-direction:column;
     }
 
-    /* Table */
+    /* ===== Table ===== */
     .table-wrap{
       overflow:auto;
       height:100%;
-      /* scroll bar */
       scrollbar-color: #444 #111;
     }
+
     .table{
       width:100%;
       border-collapse:separate;
@@ -204,10 +213,10 @@
       background: #1a1a1a;
       color:#fff;
       font-weight:900;
-      font-size:14px;
+      font-size: var(--fs-th);
       text-align:left;
       border-bottom:1px solid var(--line);
-      padding:10px 10px;
+      padding:9px 10px;
       white-space:nowrap;
     }
 
@@ -246,8 +255,9 @@
 
     tbody td{
       border-bottom:1px solid #151515;
-      padding:8px 10px;
-      font-size:14px;
+      padding:7px 10px;
+      font-size: var(--fs-td);
+      line-height: 1.1;
       white-space:nowrap;
       background:#0b0b0b;
     }
@@ -257,7 +267,7 @@
     }
 
     tbody td.name{
-      font-weight:800;
+      font-weight:900;
       max-width: 260px;
       overflow:hidden;
       text-overflow:ellipsis;
@@ -280,24 +290,22 @@
     .neg{ color: var(--red); }
     .zero{ color: #d7d7d7; }
 
-    /* Price “highlight blocks” 느낌 */
+    /* 가격 강조 블록(원본 느낌) */
     td.price.highlight-green{
-      background: rgba(32,210,107,.25) !important;
+      background: rgba(32,210,107,.22) !important;
       border-left:3px solid var(--green);
-      border-right:1px solid #0f2a1b;
     }
     td.price.highlight-red{
-      background: rgba(255,43,43,.22) !important;
+      background: rgba(255,43,43,.20) !important;
       border-left:3px solid var(--red);
-      border-right:1px solid #2a0f0f;
     }
 
-    /* Responsive */
+    /* ===== Responsive (모바일) ===== */
     @media (max-width: 980px){
       :root{ --sideW: 220px; }
-      .topbar .title{ letter-spacing:6px; font-size:22px; }
-      .nav a{ font-size:14px; padding:9px 10px; }
-      .ad .ad-bottom{ font-size:38px; }
+      .topbar .title{ letter-spacing:6px; font-size:20px; }
+      .nav a{ font-size:14px; }
+      .ad .ad-bottom{ font-size:36px; }
     }
 
     @media (max-width: 720px){
@@ -308,7 +316,6 @@
       .sidebar{
         grid-row:auto;
         grid-column:1;
-        flex-direction:column;
         min-width:auto;
       }
       .topbar{ grid-column:1; }
@@ -359,21 +366,19 @@
     <!-- Main -->
     <main class="main">
       <section class="card">
-        <div class="table-wrap" id="wrap">
+        <div class="table-wrap">
           <table class="table" id="stockTable">
             <thead>
               <tr>
                 <th class="sortable" data-key="name">
                   <div class="th-flex">
-                    <span>Name</span>
-                    <span class="sort-icon"></span>
+                    <span>Name</span><span class="sort-icon"></span>
                     <span class="sort-state" id="state-name"></span>
                   </div>
                 </th>
                 <th class="sortable" data-key="price" style="text-align:right;">
                   <div class="th-flex">
-                    <span>Price</span>
-                    <span class="sort-icon"></span>
+                    <span>Price</span><span class="sort-icon"></span>
                     <span class="sort-state" id="state-price"></span>
                   </div>
                 </th>
@@ -419,8 +424,6 @@
   </div>
 
   <script>
-    // ====== 데이터(샘플) ======
-    // 여기에 종목/수익률 데이터를 넣으면 자동 렌더링됩니다.
     const rows = [
       { name:"Visa Inc", price:1245.46, d1: 0.62, d5: 0.62, m1: 0.62, m3:-6.54, m6: 0.62, ytd: 0.62, y1: 0.62, y3:-6.54, y5: 0.62, y10:0.62 },
       { name:"Apple Inc", price: 453.23, d1:-13.21, d5:-13.21, m1: 2.22, m3:-13.21, m6:-13.21, ytd:20.22, y1: 2.22, y3:-13.21, y5:-13.21, y10:-13.21 },
@@ -436,22 +439,6 @@
       { name:"Berkshire Hathaway Inc", price:21.12, d1:20.23, d5:-13.22, m1:2.23, m3:20.22, m6:20.22, ytd:2.23, y1:20.23, y3:-13.22, y5:20.23, y10:20.23 },
     ];
 
-    const columns = [
-      { key:"name", label:"Name", type:"text" },
-      { key:"price", label:"Price", type:"number" },
-      { key:"d1", label:"1D", type:"pct" },
-      { key:"d5", label:"5D", type:"pct" },
-      { key:"m1", label:"1M", type:"pct" },
-      { key:"m3", label:"3M", type:"pct" },
-      { key:"m6", label:"6M", type:"pct" },
-      { key:"ytd", label:"YTD", type:"pct" },
-      { key:"y1", label:"1Y", type:"pct" },
-      { key:"y3", label:"3Y", type:"pct" },
-      { key:"y5", label:"5Y", type:"pct" },
-      { key:"y10", label:"10Y", type:"pct" },
-    ];
-
-    // ====== 렌더링 ======
     const tbody = document.getElementById("tbody");
 
     function pctClass(v){
@@ -459,12 +446,9 @@
       if (v < 0) return "neg";
       return "zero";
     }
-
     function fmtPrice(v){
-      // 천단위 콤마
       return v.toLocaleString(undefined, { minimumFractionDigits:2, maximumFractionDigits:2 });
     }
-
     function fmtPct(v){
       const sign = v > 0 ? "+" : "";
       return `${sign}${v.toFixed(2)}%`;
@@ -475,24 +459,19 @@
       data.forEach((r, idx) => {
         const tr = document.createElement("tr");
 
-        // name
         const tdName = document.createElement("td");
         tdName.className = "name";
         tdName.textContent = r.name;
         tr.appendChild(tdName);
 
-        // price with occasional highlight like screenshot
         const tdPrice = document.createElement("td");
         tdPrice.className = "price";
         tdPrice.textContent = fmtPrice(r.price);
 
-        // 데모: 가격이 특정 조건일 때 강조(스크린샷 느낌)
         if (idx % 6 === 1) tdPrice.classList.add("highlight-red");
         if (idx % 6 === 5) tdPrice.classList.add("highlight-green");
-
         tr.appendChild(tdPrice);
 
-        // pct columns
         ["d1","d5","m1","m3","m6","ytd","y1","y3","y5","y10"].forEach(k => {
           const td = document.createElement("td");
           td.className = `pct ${pctClass(r[k])}`;
@@ -504,55 +483,41 @@
       });
     }
 
-    // ====== 정렬 ======
     let sortKey = "name";
-    let sortDir = "asc"; // asc | desc
+    let sortDir = "asc";
 
+    const stateKeys = ["name","price","d1","d5","m1","m3","m6","ytd","y1","y3","y5","y10"];
     const stateEls = {};
-    columns.forEach(c => {
-      const el = document.getElementById("state-" + c.key);
-      if (el) stateEls[c.key] = el;
-    });
+    stateKeys.forEach(k => stateEls[k] = document.getElementById("state-" + k));
 
     function setSortState(){
-      Object.values(stateEls).forEach(el => el.textContent = "");
-      if (stateEls[sortKey]) {
-        stateEls[sortKey].textContent = sortDir === "asc" ? "▲" : "▼";
-      }
+      Object.values(stateEls).forEach(el => el && (el.textContent = ""));
+      if (stateEls[sortKey]) stateEls[sortKey].textContent = (sortDir === "asc") ? "▲" : "▼";
     }
 
     function sortData(key){
-      if (sortKey === key){
-        sortDir = (sortDir === "asc") ? "desc" : "asc";
-      } else {
-        sortKey = key;
-        sortDir = "asc";
-      }
+      if (sortKey === key) sortDir = (sortDir === "asc") ? "desc" : "asc";
+      else { sortKey = key; sortDir = "asc"; }
 
       const sorted = [...rows].sort((a,b) => {
         const av = a[key];
         const bv = b[key];
-
-        // text vs number
         if (typeof av === "string"){
           const cmp = av.localeCompare(bv);
-          return sortDir === "asc" ? cmp : -cmp;
-        } else {
-          const cmp = (av ?? 0) - (bv ?? 0);
-          return sortDir === "asc" ? cmp : -cmp;
+          return (sortDir === "asc") ? cmp : -cmp;
         }
+        const cmp = (av ?? 0) - (bv ?? 0);
+        return (sortDir === "asc") ? cmp : -cmp;
       });
 
       setSortState();
       render(sorted);
     }
 
-    // header click
     document.querySelectorAll("th.sortable").forEach(th => {
       th.addEventListener("click", () => sortData(th.dataset.key));
     });
 
-    // 초기 렌더
     setSortState();
     render(rows);
   </script>
